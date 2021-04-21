@@ -116,7 +116,9 @@ int permutation(int n)
 		nouveau[P[j]] = bit;	// remplir tableau
 		j++;
 	}
-	return calcul_binaire_en_hexa(nouveau);
+	int res = calcul_binaire_en_hexa(nouveau);
+	free(nouveau);
+	return res;
 }
 
 
