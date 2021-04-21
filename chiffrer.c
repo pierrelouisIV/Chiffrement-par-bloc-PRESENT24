@@ -137,12 +137,12 @@ void affichebin(unsigned n)
 }
 
 
-int chiffrer(int mot)
+int chiffrer(int mot, int cle_maitre)
 {
 	// %X affiche la valeur en hexadecimal
 
 
-	int K = 0x000000;	// la clef maître
+	//int K = 0x000000;	// la clef maître
 	//int m = 0x000000;	// message clair
 
 	int etat = mot;

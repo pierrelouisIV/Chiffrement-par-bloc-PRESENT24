@@ -23,7 +23,10 @@ int main()
 			printf("Veuillez rentrer votre mot (entier)\n");
 			int mot;
 			scanf("%d", &mot);
-			chiffrer(mot);
+			printf("Veuillez rentrer votre clé maitre (entier)\n");
+			int cle;
+			scanf("%d", &cle);
+			chiffrer(mot,cle);
 		
 			printf("Voulez vous recommencer(1) ou quitter (0)\n");
 			int choice1;

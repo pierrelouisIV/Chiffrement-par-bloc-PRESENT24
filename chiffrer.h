@@ -13,4 +13,4 @@ int permutation(int n);
 
 void affichebin(unsigned n);
 
-int chiffrer(int mot); //Main
+int chiffrer(int mot, int cle_maitre); //Main
