@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include "chiffrer.h"
 
 #define D 0
 #define l_boite 16
@@ -137,15 +137,15 @@ void affichebin(unsigned n)
 }
 
 
-int main(int argc, char const *argv[])
+int chiffrer(int mot)
 {
 	// %X affiche la valeur en hexadecimal
 
 
 	int K = 0x000000;	// la clef maître
-	int m = 0x000000;	// message clair
+	//int m = 0x000000;	// message clair
 
-	int etat = m;
+	int etat = mot;
 	int sous_clefs[] = {0x000000, 0x000000, 0x000001, 0x000001, 0x400062, 0x80002a,
 						0xc00033, 0x40005b, 0x00064c, 0x800284, 0x400355};
 
@@ -160,14 +160,6 @@ int main(int argc, char const *argv[])
 	etat = clef_plus_etat(etat, sous_clefs[10]);
 	printf("%X\n", etat);
 
-
-	// pour K :
-	// K de 80 bits = K <<= 28 bits
-	//		 puis   = K >>= 28 bits
-
-	// pour mettre à jour K : r1 = K << 61 bits
-	//  puis 				  r2 = K >> 19 bits
-	//	puis 			K = concat_80(r1,r2)
 
 	return 0;
 }
