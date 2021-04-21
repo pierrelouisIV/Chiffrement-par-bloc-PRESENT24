@@ -15,10 +15,18 @@
 
 
 
-// etape une : le Xor clef + etat
-int clef_plus_etat(int clef, int etat)
+// affiche en binaire :
+void affichebin(unsigned n)
 {
-	return clef ^ etat;
+	unsigned bit = 0 ;
+	unsigned mask = 1 ;
+	for (int i = 0 ; i < 32 ; ++i)
+	{
+		bit = (n & mask) >> i ;
+		printf("%d", bit) ;
+		mask <<= 1 ;
+	}
+	printf("\n\n");
 }
 
 // pour concaténer deux mots de quatre bits :
@@ -50,7 +58,15 @@ int recherche_dichotomique(int valeur, int borne_inf, int borne_sup)
 }
 
 
-// la boîte-S 
+
+// Etape 1 : le Xor clef + etat
+int clef_plus_etat(int clef, int etat)
+{
+	return clef ^ etat;
+}
+
+
+// Etape 2 : la boîte-S 
 int substitution(int m)
 {
 	int res1 = 0;
@@ -66,6 +82,7 @@ int substitution(int m)
 	}
 	return res3;
 }
+
 
 // pour transformer une suite de 0 et 1 en hexadecimal :
 int calcul_binaire_en_hexa(int *tableau)
@@ -99,7 +116,7 @@ int calcul_binaire_en_hexa(int *tableau)
 }
 
 
-// etape 2 : la permutation
+// Etape 3 : la permutation
 int permutation(int n)
 {
 	int *nouveau = malloc(sizeof(int)*l_permute);
@@ -121,20 +138,6 @@ int permutation(int n)
 	return res;
 }
 
-
-// affiche en binaire :
-void affichebin(unsigned n)
-{
-	unsigned bit = 0 ;
-	unsigned mask = 1 ;
-	for (int i = 0 ; i < 32 ; ++i)
-	{
-		bit = (n & mask) >> i ;
-		printf("%d", bit) ;
-		mask <<= 1 ;
-	}
-	printf("\n\n");
-}
 
 
 int chiffrer(int mot, int cle_maitre)

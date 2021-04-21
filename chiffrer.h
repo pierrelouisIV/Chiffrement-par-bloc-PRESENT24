@@ -1,16 +1,22 @@
-#include "stdio.h"
-#include <stdlib.h>
-#include <math.h>
+#ifndef H_CHIFFRER
+#define H_CHIFFRER
 
-int clef_plus_etat(int clef, int etat); // XOR
 
+// Fonctions complémentaires :
+void affichebin(unsigned n);
 int recherche_dichotomique(int valeur, int borne_inf, int borne_sup); 
 int concat(int m, int n);
-int substitution(int m);
-int calcul_binaire_en_hexa(int *tableau);
 
+// Etape 3 :
+int calcul_binaire_en_hexa(int *tableau);
 int permutation(int n);
 
-void affichebin(unsigned n);
+// Etape 2 :
+int substitution(int m);
+
+// Etape 1 :
+int clef_plus_etat(int clef, int etat); // XOR
 
 int chiffrer(int mot, int cle_maitre); //Main
+
+#endif
