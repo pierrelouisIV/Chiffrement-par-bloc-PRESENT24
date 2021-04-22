@@ -154,14 +154,15 @@ int chiffrer(int mot, int cle_maitre)
 
 	for (int i = 0; i < 10; ++i)
 	{
-		printf("%X et %X\n", etat, sous_clefs[i]);
+		printf("Tour (%d) : %X et %X\n", i, etat, sous_clefs[i]);
 		etat = clef_plus_etat(etat, sous_clefs[i]);
 		etat = substitution(etat);
 		etat = permutation(etat);
 	}
 
+	printf("Tour (%d) : %X et %X\n", 10, etat, sous_clefs[10]);
 	etat = clef_plus_etat(etat, sous_clefs[10]);
-	printf("%X\n", etat);
+	printf("\nMessage chiffré : %X (16) - %d (10) \n\n", etat,etat);
 
 
 	return 0;

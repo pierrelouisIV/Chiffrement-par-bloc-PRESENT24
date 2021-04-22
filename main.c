@@ -16,16 +16,16 @@ int main()
 	
 		int choice;
 		scanf("%d", &choice);
-		int state = 0;
 		if(choice == 1)
 		{
 			printf("CHIFFREMENT\n");
-			printf("Veuillez rentrer votre mot (entier)\n");
+			printf("Veuillez rentrer votre mot (base 16)\n");
 			int mot;
-			scanf("%d", &mot);
-			printf("Veuillez rentrer votre clé maitre (entier)\n");
+			scanf("%X", &mot);
+			printf("Veuillez rentrer votre clé maitre (base 16)\n");
 			int cle;
-			scanf("%d", &cle);
+			scanf("%X", &cle);
+			printf("\n");
 			chiffrer(mot,cle);
 		
 			printf("Voulez vous recommencer(1) ou quitter (0)\n");
@@ -37,7 +37,21 @@ int main()
 		}
 		if (choice == 2)
 		{
-			//Appel de dechiffrement
+			printf("DECHIFFREMENT\n");
+			printf("Veuillez rentrer votre mot chiffrer (base 16)\n");
+			int mot;
+			scanf("%X", &mot);
+			printf("Veuillez rentrer votre clé maitre (base 16)\n");
+			int cle;
+			scanf("%X", &cle);
+			printf("\n");
+			dechiffrer(mot,cle);
+		
+			printf("Voulez vous recommencer(1) ou quitter (0)\n");
+			int choice1;
+			scanf("%d", &choice1);
+			if(choice1 == 0)
+				break;
 		}
 		if(choice == 3)
 		{

@@ -17,6 +17,6 @@ int substitution_inv(int m);
 int calcul_binaire_en_hexa_2(int *tableau);
 int permutation_inv(int n);
 
-int chiffrer_2(int mot, int cle_maitre); //Main
+int dechiffrer(int mot, int cle_maitre); //Main
 
 #endif

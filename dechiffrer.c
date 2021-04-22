@@ -143,20 +143,22 @@ int permutation_inv(int n)
 	return resultat;
 }
 
-int chiffrer_2(int mot_chiffre, int clef_maitre)
+int dechiffrer(int mot_chiffre, int clef_maitre)
 {
 	int sous_clefs[] = {0x000000, 0x000000, 0x000001, 0x000001, 0x400062, 0x80002a,
 						0xc00033, 0x40005b, 0x00064c, 0x800284, 0x400355};
 
 	int etat = mot_chiffre;
 	etat = clef_plus_etat_2(etat, sous_clefs[10]);
+	printf("Tour (%d) : %X et %X\n", 10, etat, sous_clefs[10]);
 	for (int i = 9; i >= 0; --i)
 	{		
 		etat = permutation_inv(etat);
 		etat = substitution_inv(etat);
 		etat = clef_plus_etat_2(etat, sous_clefs[i]);	
-		printf("%X et %X \n",etat, sous_clefs[i] );
+		printf("Tour (%d) : %X et %X\n", i, etat, sous_clefs[i]);
 	}
-	printf("le mot clair est : %X\n", etat);
+	
+	printf("\nLe mot clair est : %X (16) - %d (10)\n\n", etat, etat);
 	return 0;
 }
