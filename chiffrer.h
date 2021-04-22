@@ -1,6 +1,7 @@
 #ifndef H_CHIFFRER
 #define H_CHIFFRER
 
+typedef unsigned char uint8_t;
 
 // Fonctions complémentaires :
 void affichebin(unsigned n);

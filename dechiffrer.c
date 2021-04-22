@@ -7,9 +7,6 @@
 #define l_boite 16
 #define l_permute 24
 
-// pour stocker 8bits par 8bits
-typedef unsigned char uint8_t;
-
 // variables globales :	
 int t2_dechiffrer[] = {0x5, 0xe, 0xf, 0x8, 0xc, 0x1, 0x2, 0xd, 0xb, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xa};	// S(x) -> x
 
@@ -20,7 +17,7 @@ int P_dechiffrer[] = {0, 4, 8 ,12, 16, 20, 1, 5, 9, 13, 17, 21, 2, 6, 10, 14,
 int sous_clefs[11]; 
 
 // pour générer les sous clefs (boiteS non inversée):
-int t2[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};
+int t2_2[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};
 
 
 
@@ -49,13 +46,13 @@ int concat_2(int m, int n)
 }
 
 // fonction pour concaténer par 8 bits :
-int concat_uint8(int m, int n)
+int concat_uint8_2(int m, int n)
 {
 	return (m << 8) | n;
 }
 
 // Effectue les trois étapes de Maj de la clef maître :
-void mise_a_jour(uint8_t *clef, int tour)
+void mise_a_jour_2(uint8_t *clef, int tour)
 {
 	uint8_t Maj_clef[10]; // pour stocker la nouvelle clef
 	// Maj de la clef maitre (pivot de 61 bits ):
@@ -71,7 +68,7 @@ void mise_a_jour(uint8_t *clef, int tour)
 	Maj_clef[0] = (clef[7] << 5) | (clef[8] >> 3);
 
 	// substitution des quatre premiers bits : [79,78,77,76]
-	int res1 = t2[Maj_clef[0] >> 4];
+	int res1 = t2_2[Maj_clef[0] >> 4];
 	Maj_clef[0] = (Maj_clef[0] & 0x0F) | (res1 << 4);
 
 	// xor des bits [19, 18, 17, 16, 15] + numéro de tour (i)
@@ -93,7 +90,7 @@ void mise_a_jour(uint8_t *clef, int tour)
 }
 
 // Fonction pour calculer et stocker les sous_clefs
-void algo_cadencement(int K)
+void algo_cadencement_2(int K)
 {
 	int j = 10;
 	int Ki = 0;					// la clef Ki au tour i :
@@ -114,10 +111,10 @@ void algo_cadencement(int K)
 	// calculer les sous_clefs
 	for (int i = 1; i <= 11; ++i)
 	{
-		Ki = concat_uint8(clef_maitre[5], clef_maitre[6]);	// on prend les bits à la position : [39, 38, ..., 17, 16]
-		Ki = concat_uint8(Ki, clef_maitre[7]);
+		Ki = concat_uint8_2(clef_maitre[5], clef_maitre[6]);	// on prend les bits à la position : [39, 38, ..., 17, 16]
+		Ki = concat_uint8_2(Ki, clef_maitre[7]);
 		sous_clefs[j] = Ki;
-		mise_a_jour(clef_maitre, i);
+		mise_a_jour_2(clef_maitre, i);
 		j--;
 	}
 }
@@ -206,7 +203,7 @@ int permutation_inv(int n)
 int dechiffrer(int mot_chiffre, int clef_maitre)
 {
 	int etat = mot_chiffre;
-	algo_cadencement(clef_maitre);
+	algo_cadencement_2(clef_maitre);
 
 	etat = clef_plus_etat_2(etat, sous_clefs[0]);
 	printf("Tour (%d) : %X et %X\n", 0, etat, sous_clefs[0]);
