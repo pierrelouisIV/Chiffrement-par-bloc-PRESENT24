@@ -14,7 +14,7 @@ int P_dechiffrer[] = {0, 4, 8 ,12, 16, 20, 1, 5, 9, 13, 17, 21, 2, 6, 10, 14,
  			18, 22, 3, 7, 11, 15, 19, 23};													// P_dechiffrer(i) -> i
 
 // pour stocker les sous clefs :
-int sous_clefs[11]; 
+int sous_clefs_dechiffre[11]; 
 
 // pour générer les sous clefs (boiteS non inversée):
 int t2_2[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};
@@ -89,7 +89,7 @@ void mise_a_jour_2(uint8_t *clef, int tour)
 	
 }
 
-// Fonction pour calculer et stocker les sous_clefs
+// Fonction pour calculer et stocker les sous_clefs_dechiffre
 void algo_cadencement_2(int K)
 {
 	int j = 10;
@@ -108,12 +108,12 @@ void algo_cadencement_2(int K)
 		clef_maitre[i] = 0x00;		// on remplit le reste de la clef maître avec 0
 
 
-	// calculer les sous_clefs
+	// calculer les sous_clefs_dechiffre
 	for (int i = 1; i <= 11; ++i)
 	{
 		Ki = concat_uint8_2(clef_maitre[5], clef_maitre[6]);	// on prend les bits à la position : [39, 38, ..., 17, 16]
 		Ki = concat_uint8_2(Ki, clef_maitre[7]);
-		sous_clefs[j] = Ki;
+		sous_clefs_dechiffre[j] = Ki;
 		mise_a_jour_2(clef_maitre, i);
 		j--;
 	}
@@ -205,14 +205,14 @@ int dechiffrer(int mot_chiffre, int clef_maitre)
 	int etat = mot_chiffre;
 	algo_cadencement_2(clef_maitre);
 
-	etat = clef_plus_etat_2(etat, sous_clefs[0]);
-	printf("Tour (%d) : %X et %X\n", 0, etat, sous_clefs[0]);
+	etat = clef_plus_etat_2(etat, sous_clefs_dechiffre[0]);
+	printf("Tour (%d) : %X et %X\n", 0, etat, sous_clefs_dechiffre[0]);
 	for (int i = 1; i < 11; ++i)
 	{		
 		etat = permutation_inv(etat);
 		etat = substitution_inv(etat);
-		etat = clef_plus_etat_2(etat, sous_clefs[i]);	
-		printf("Tour (%d) : %X et %X\n", i, etat, sous_clefs[i]);
+		etat = clef_plus_etat_2(etat, sous_clefs_dechiffre[i]);	
+		printf("Tour (%d) : %X et %X\n", i, etat, sous_clefs_dechiffre[i]);
 	}
 	
 	printf("\nLe mot clair est : %X (16) - %d (10)\n\n", etat, etat);
