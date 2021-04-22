@@ -5,6 +5,11 @@
 // Fonctions complémentaires :
 void affichebin(unsigned n);
 int concat(int m, int n);
+int concat_uint8(int m, int n);
+
+// Fonctions pour générer les sous clefs :
+void mise_a_jour(uint8_t *clef, int tour);
+void algo_cadencement(int K);
 
 // Etape 3 :
 int calcul_binaire_en_hexa(int *tableau);
