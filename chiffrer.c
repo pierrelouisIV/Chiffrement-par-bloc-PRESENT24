@@ -7,7 +7,6 @@
 #define l_boite 16
 #define l_permute 24
 // variables globales de la boîte-S
- int t1[] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf};
  int t2[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};
 // variable globale permutation :
  int P[] = {0, 6, 12, 18, 1, 7, 13, 19, 2, 8, 14, 20, 3, 9, 15, 21, 4,
@@ -36,26 +35,6 @@ int concat(int m, int n)
 }
 
 
-// algorithme de recherche :
-int recherche_dichotomique(int valeur, int borne_inf, int borne_sup)
-{
-	int milieu;
-	if (borne_sup < borne_inf)
-		return -1;
-	else
-	{
-		milieu = (borne_inf+borne_sup) / 2;
-		if (valeur == t1[milieu])
-			return milieu;
-		else
-		{
-			if (valeur < t1[milieu])
-				return recherche_dichotomique(valeur, borne_inf, milieu-1);
-			else
-				return recherche_dichotomique(valeur, milieu+1, borne_sup);
-		}
-	}
-}
 
 
 
@@ -77,7 +56,7 @@ int substitution(int m)
 	{
 		res1 = (m & masque) >> i*4;
 		masque >>= 4;
-		res2 = t2[recherche_dichotomique(res1, D, l_boite)];
+		res2 = t2[res1];
 		res3 = concat(res3, res2);
 	}
 	return res3;

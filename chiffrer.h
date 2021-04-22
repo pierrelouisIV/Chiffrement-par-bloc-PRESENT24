@@ -4,7 +4,6 @@
 
 // Fonctions complémentaires :
 void affichebin(unsigned n);
-int recherche_dichotomique(int valeur, int borne_inf, int borne_sup); 
 int concat(int m, int n);
 
 // Etape 3 :

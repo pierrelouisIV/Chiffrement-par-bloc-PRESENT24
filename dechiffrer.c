@@ -7,9 +7,8 @@
 #define l_boite 16
 #define l_permute 24
 
-// variables globales :
-int t1_dechiffrer[] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf};	// S(x)
-int t2_dechiffrer[] = {0x5, 0xe, 0xf, 0x8, 0xc, 0x1, 0x2, 0xd, 0xb, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xa};	// x
+// variables globales :	
+int t2_dechiffrer[] = {0x5, 0xe, 0xf, 0x8, 0xc, 0x1, 0x2, 0xd, 0xb, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xa};	// S(x) -> x
 
 int P_dechiffrer[] = {0, 4, 8 ,12, 16, 20, 1, 5, 9, 13, 17, 21, 2, 6, 10, 14, 
  			18, 22, 3, 7, 11, 15, 19, 23};													// P_dechiffrer(i) -> i
@@ -39,26 +38,6 @@ int concat_2(int m, int n)
 }
 
 
-// algorithme de recherche (recherche dans la boîte-S):
-int recherche_dichotomique_2(int valeur, int borne_inf, int borne_sup)
-{
-	int milieu;
-	if (borne_sup < borne_inf)
-		return -1;
-	else
-	{
-		milieu = (borne_inf+borne_sup) / 2;
-		if (valeur == t1_dechiffrer[milieu])
-			return milieu;
-		else
-		{
-			if (valeur < t1_dechiffrer[milieu])
-				return recherche_dichotomique_2(valeur, borne_inf, milieu-1);
-			else
-				return recherche_dichotomique_2(valeur, milieu+1, borne_sup);
-		}
-	}
-}
 
 
 
@@ -81,7 +60,7 @@ int substitution_inv(int m)
 	{
 		res1 = (m & masque) >> i*4;
 		masque >>= 4;
-		res2 = t2_dechiffrer[recherche_dichotomique_2(res1, D, l_boite)];
+		res2 = t2_dechiffrer[res1];
 		res3 = concat_2(res3, res2);
 	}
 	return res3;
