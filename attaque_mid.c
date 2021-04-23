@@ -1,4 +1,5 @@
 #include "attaque_mid.h"
+#include <time.h>
 
 // taille des listes Lm et LC
 #define MAX 16777216
@@ -77,7 +78,6 @@ void printArray(couple array[], int size) {
 
 void calcul_lm_lc(int mot, int chiffre)
 {
-	
 	for(int i = 0; i < MAX; i++)
 	{	
 		LM[i].mot = chiffrer_sansecrire(mot,i);
@@ -87,10 +87,7 @@ void calcul_lm_lc(int mot, int chiffre)
 		LC[i].cle = i;
 		//printf("\nMessage chiffré (%d) : %X (16)\n\n", i,LM[i]);
 		//printf("%d\n",i);
-	}
-	
-	printf("Done\n");
-	
+	}	
 }
 
 
@@ -100,12 +97,18 @@ void calcul_lm_lc(int mot, int chiffre)
 int attaque_mid()
 {
 	//Creation des listes
+	clock_t tempscalc;
 	calcul_lm_lc(M1,C1);
+	tempscalc=clock();
+	printf("Calcul des tableaux fini en %f s \n",(double) tempscalc/CLOCKS_PER_SEC);
 	
 	//Tri des listes (Quicksort)
-	//int n = sizeof(LM) / sizeof(LM[0]);
-	//quickSort(LM, 0, n - 1);
-	//quickSort(LC, 0, n - 1);
+	clock_t tempstri;
+	int n = sizeof(LM) / sizeof(LM[0]);
+	quickSort(LM, 0, n - 1);
+	quickSort(LC, 0, n - 1);
+	tempstri=clock();
+	printf("Tri des tableaux fini en %f s \n",(double) (tempstri-tempscalc)/CLOCKS_PER_SEC);
 	
 	//Recherche element commun
 	
