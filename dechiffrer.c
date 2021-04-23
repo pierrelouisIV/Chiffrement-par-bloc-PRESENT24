@@ -10,8 +10,8 @@
 // variables globales :	
 int t2_dechiffrer[] = {0x5, 0xe, 0xf, 0x8, 0xc, 0x1, 0x2, 0xd, 0xb, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xa};	// S(x) -> x
 
-int P_dechiffrer[] = {0, 4, 8 ,12, 16, 20, 1, 5, 9, 13, 17, 21, 2, 6, 10, 14, 
- 			18, 22, 3, 7, 11, 15, 19, 23};													// P_dechiffrer(i) -> i
+int P_dechiffrer[] = {0, 6, 12, 18, 1, 7, 13, 19, 2, 8, 14, 20, 3, 9, 15, 21, 4,		// i -> P(i)
+ 			 10, 16, 22, 5, 11, 17, 23};												// P_dechiffrer(i) -> i
 
 // pour stocker les sous clefs :
 int sous_clefs_dechiffre[11]; 
@@ -144,60 +144,16 @@ int substitution_inv(int m)
 	return res3;
 }
 
-
-// pour transformer une suite de 0 et 1 en hexadecimal :
-int calcul_binaire_en_hexa_2(int *tableau)
-{
-	int res1 = 0;
-	int res2 = 0;
-	int cpt = 0;
-	int P_dechiffrer = 3;
-	for (int i = 23; i >= -1; --i)
-	{
-		if(cpt == 4)
-		{
-			res2 = concat_2(res2, res1);
-			cpt = 0;
-			P_dechiffrer = 3;
-			res1 = 0;
-		}
-		if (tableau[i])
-			{
-				res1 += pow(2,P_dechiffrer);
-				cpt++;
-				P_dechiffrer--;
-			}
-		else
-		{
-			cpt++;
-			P_dechiffrer--;
-		}
-	}
-	return res2;
-}
-
 // Etape 1 : la permutation
 int permutation_inv(int n)
 {
-	int resultat = 0;
-	int *nouveau = malloc(sizeof(int)*l_permute);
-	for (int i = 0; i < l_permute; ++i)
-		nouveau[i] = 0;
-
-	int j = 0;
-	int bit = 0;
-	int masque = 1;
-	for (int i = 0 ; i < 24 ; ++i)
-	{
-		bit = (n & masque) >> i ;
-		masque <<= 1 ;
-		nouveau[P_dechiffrer[j]] = bit;	// remplir tableau
-		j++;
-	}
-
-	resultat = calcul_binaire_en_hexa_2(nouveau);
-	free(nouveau);
-	return resultat;
+    int resultat = 0;
+    for (int i = 0; i < 24; ++i)
+    {
+        int distance = 23 - P_dechiffrer[i];
+        resultat = (resultat << 1) | ((n >> distance) & 0x1);
+    }
+    return resultat;
 }
 
 int dechiffrer(int mot_chiffre, int clef_maitre)

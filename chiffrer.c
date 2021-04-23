@@ -134,62 +134,17 @@ int substitution(int m)
 	return res3;
 }
 
-
-// pour transformer une suite de 0 et 1 en hexadecimal :
-int calcul_binaire_en_hexa(int *tableau)
-{
-	int res1 = 0;
-	int res2 = 0;
-	int cpt = 0;
-	int p = 3;
-	for (int i = 23; i >= -1; --i)
-	{
-		if(cpt == 4)
-		{
-			res2 = concat(res2, res1);
-			cpt = 0;
-			p = 3;
-			res1 = 0;
-		}
-		if (tableau[i])
-			{
-				res1 += pow(2,p);
-				cpt++;
-				p--;
-			}
-		else
-		{
-			cpt++;
-			p--;
-		}
-	}
-	return res2;
-}
-
-
 // Etape 3 : la permutation
 int permutation(int n)
 {
-	int *nouveau = malloc(sizeof(int)*l_permute);
-	for (int i = 0; i < l_permute; ++i)
-		nouveau[i] = 0;
-
-	int j = 0;
-	int bit = 0;
-	int masque = 1;
-	for (int i = 0 ; i < 24 ; ++i)
-	{
-		bit = (n & masque) >> i ;
-		masque <<= 1 ;
-		nouveau[P[j]] = bit;	// remplir tableau
-		j++;
-	}
-	int res = calcul_binaire_en_hexa(nouveau);
-	free(nouveau);
-	return res;
+    int resultat = 0;
+    for (int i = 0; i < 24; ++i)
+    {
+        int distance = 23 - i;
+        resultat = resultat | ((n >> distance & 0x1) << 23 - P[i]);
+    }
+    return resultat;
 }
-
-
 
 int chiffrer(int mot, int cle_maitre)
 {
