@@ -15,13 +15,15 @@ struct couple
 typedef struct couple couple;
 
 void calcul_lm_lc(int mot, int chiffre);
-//void calcul_lc(int chiffre);
 
-
-int attaque_mid();
+int attaque_mid(); //Main
 
 int recherche_dicho(int valeur, int borne_inf, int borne_sup);
-void quick_sort();
+
+//Fonctions de tri
+void quickSort(couple array[], int low, int high);
+int partition(couple array[], int low, int high);
+void swap(couple *a, couple *b);
 
 
 #endif
