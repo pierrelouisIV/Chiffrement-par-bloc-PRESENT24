@@ -86,7 +86,7 @@ void calcul_lm_lc(int mot, int chiffre)
 		LM[i].cle = i;
 		LC[i].cle = i;
 		//printf("\nMessage chiffré (%d) : %X (16)\n\n", i,LM[i]);
-		printf("%d\n",i);
+		//printf("%d\n",i);
 	}
 	
 	printf("Done\n");

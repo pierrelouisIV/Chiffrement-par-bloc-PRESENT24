@@ -135,16 +135,34 @@ int substitution(int m)
 }
 
 // Etape 3 : la permutation
-int permutation(int n)
+int permutation3(int x)
 {
-    int resultat = 0;
-    for (int i = 0; i < 24; ++i)
-    {
-        int distance = 23 - i;
-        resultat = resultat | ((n >> distance & 0x1) << 23 - P[i]);
-    }
-    return resultat;
+	x = (x & 0x00800001)
+  | ((x & 0x00004000) << 1)
+  | ((x & 0x00000020) << 2)
+  | ((x & 0x00080000) << 3)
+  | ((x & 0x00000400) << 4)
+  | ((x & 0x00000002) << 5)
+  | ((x & 0x00008000) << 6)
+  | ((x & 0x00000040) << 7)
+  | ((x & 0x00000800) << 9)
+  | ((x & 0x00000004) << 10)
+  | ((x & 0x00000080) << 12)
+  | ((x & 0x00000008) << 15)
+  | ((x & 0x00100000) >> 15)
+  | ((x & 0x00010000) >> 12)
+  | ((x & 0x00200000) >> 10)
+  | ((x & 0x00001000) >> 9)
+  | ((x & 0x00020000) >> 7)
+  | ((x & 0x00000100) >> 6)
+  | ((x & 0x00400000) >> 5)
+  | ((x & 0x00002000) >> 4)
+  | ((x & 0x00000010) >> 3)
+  | ((x & 0x00040000) >> 2)
+  | ((x & 0x00000200) >> 1);
+	return x;
 }
+
 
 int chiffrer(int mot, int cle_maitre)
 {
@@ -158,7 +176,7 @@ int chiffrer(int mot, int cle_maitre)
 		printf("Tour (%d) : %X et %X\n", i, etat, sous_clefs[i]);
 		etat = clef_plus_etat(etat, sous_clefs[i]);
 		etat = substitution(etat);
-		etat = permutation(etat);
+		etat = permutation3(etat);
 	}
 
 	printf("Tour (%d) : %X et %X\n", 10, etat, sous_clefs[10]);
@@ -178,7 +196,7 @@ int chiffrer_sansecrire(int mot, int cle_maitre)
 	{
 		etat = clef_plus_etat(etat, sous_clefs[i]);
 		etat = substitution(etat);
-		etat = permutation(etat);
+		etat = permutation3(etat);
 	}
 	etat = clef_plus_etat(etat, sous_clefs[10]);
 

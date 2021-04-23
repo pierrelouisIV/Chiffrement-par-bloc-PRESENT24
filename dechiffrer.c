@@ -145,15 +145,32 @@ int substitution_inv(int m)
 }
 
 // Etape 1 : la permutation
-int permutation_inv(int n)
+int permutation_inv3(int x)
 {
-    int resultat = 0;
-    for (int i = 0; i < 24; ++i)
-    {
-        int distance = 23 - P_dechiffrer[i];
-        resultat = (resultat << 1) | ((n >> distance) & 0x1);
-    }
-    return resultat;
+	x = (x & 0x00800001)
+  | ((x & 0x00000100) << 1)
+  | ((x & 0x00010000) << 2)
+  | ((x & 0x00000002) << 3)
+  | ((x & 0x00000200) << 4)
+  | ((x & 0x00020000) << 5)
+  | ((x & 0x00000004) << 6)
+  | ((x & 0x00000400) << 7)
+  | ((x & 0x00000008) << 9)
+  | ((x & 0x00000800) << 10)
+  | ((x & 0x00000010) << 12)
+  | ((x & 0x00000020) << 15)
+  | ((x & 0x00040000) >> 15)
+  | ((x & 0x00080000) >> 12)
+  | ((x & 0x00001000) >> 10)
+  | ((x & 0x00100000) >> 9)
+  | ((x & 0x00002000) >> 7)
+  | ((x & 0x00200000) >> 6)
+  | ((x & 0x00000040) >> 5)
+  | ((x & 0x00004000) >> 4)
+  | ((x & 0x00400000) >> 3)
+  | ((x & 0x00000080) >> 2)
+  | ((x & 0x00008000) >> 1);
+	return x;
 }
 
 int dechiffrer(int mot_chiffre, int clef_maitre)
@@ -165,7 +182,7 @@ int dechiffrer(int mot_chiffre, int clef_maitre)
 	printf("Tour (%d) : %X et %X\n", 0, etat, sous_clefs_dechiffre[0]);
 	for (int i = 1; i < 11; ++i)
 	{		
-		etat = permutation_inv(etat);
+		etat = permutation_inv3(etat);
 		etat = substitution_inv(etat);
 		etat = clef_plus_etat_2(etat, sous_clefs_dechiffre[i]);	
 		printf("Tour (%d) : %X et %X\n", i, etat, sous_clefs_dechiffre[i]);
@@ -183,7 +200,7 @@ int dechiffrer_sansecrire(int mot_chiffre, int clef_maitre)
 	etat = clef_plus_etat_2(etat, sous_clefs_dechiffre[0]);
 	for (int i = 1; i < 11; ++i)
 	{		
-		etat = permutation_inv(etat);
+		etat = permutation_inv3(etat);
 		etat = substitution_inv(etat);
 		etat = clef_plus_etat_2(etat, sous_clefs_dechiffre[i]);	
 	}
