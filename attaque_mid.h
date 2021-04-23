@@ -7,6 +7,12 @@
 #include "dechiffrer.h"
 
 
+struct couple
+{
+    int mot;
+    int cle;
+};
+typedef struct couple couple;
 
 void calcul_lm_lc(int mot, int chiffre);
 //void calcul_lc(int chiffre);

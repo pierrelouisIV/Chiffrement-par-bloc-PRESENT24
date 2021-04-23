@@ -11,8 +11,8 @@
 
 // variables globales :
 
-int LM[MAX];			//mot clair
-int LC[MAX];			//mot chiffre
+couple LM[MAX];			//couple chiffrement
+couple LC[MAX];			//couple dechiffrement
 
 
 
@@ -21,8 +21,11 @@ void calcul_lm_lc(int mot, int chiffre)
 	
 	for(int i = 0; i < MAX; i++)
 	{	
-		LM[i] = chiffrer_sansecrire(mot,i);
-		LC[i] = dechiffrer_sansecrire(chiffre,i);
+		LM[i].mot = chiffrer_sansecrire(mot,i);
+		LC[i].mot = dechiffrer_sansecrire(chiffre,i);
+		
+		LM[i].cle = i;
+		LC[i].cle = i;
 		//printf("\nMessage chiffré (%d) : %X (16)\n\n", i,LM[i]);
 		printf("%d\n",i);
 	}
