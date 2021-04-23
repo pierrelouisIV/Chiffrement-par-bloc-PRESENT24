@@ -24,4 +24,6 @@ int clef_plus_etat(int clef, int etat); // XOR
 
 int chiffrer(int mot, int cle_maitre); //Main
 
+int chiffrer_sansecrire(int mot, int cle_maitre); //Main sans ecrire dans le terminal
+
 #endif

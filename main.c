@@ -55,7 +55,7 @@ int main()
 		}
 		if(choice == 3)
 		{
-			//Appel de l'attaque par le milieu
+			attaque_mid();
 		}
 	}
 	

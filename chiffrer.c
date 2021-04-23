@@ -213,3 +213,20 @@ int chiffrer(int mot, int cle_maitre)
 
 	return 0;
 }
+
+int chiffrer_sansecrire(int mot, int cle_maitre)
+{
+	int etat = mot;
+	algo_cadencement(cle_maitre);
+
+	for (int i = 0; i < 10; ++i)
+	{
+		etat = clef_plus_etat(etat, sous_clefs[i]);
+		etat = substitution(etat);
+		etat = permutation(etat);
+	}
+	etat = clef_plus_etat(etat, sous_clefs[10]);
+
+
+	return etat;
+}

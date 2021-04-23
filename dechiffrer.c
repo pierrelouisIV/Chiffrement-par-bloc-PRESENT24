@@ -218,3 +218,18 @@ int dechiffrer(int mot_chiffre, int clef_maitre)
 	printf("\nLe mot clair est : %X (16) - %d (10)\n\n", etat, etat);
 	return 0;
 }
+
+int dechiffrer_sansecrire(int mot_chiffre, int clef_maitre)
+{
+	int etat = mot_chiffre;
+	algo_cadencement_2(clef_maitre);
+
+	etat = clef_plus_etat_2(etat, sous_clefs_dechiffre[0]);
+	for (int i = 1; i < 11; ++i)
+	{		
+		etat = permutation_inv(etat);
+		etat = substitution_inv(etat);
+		etat = clef_plus_etat_2(etat, sous_clefs_dechiffre[i]);	
+	}
+	return etat;
+}

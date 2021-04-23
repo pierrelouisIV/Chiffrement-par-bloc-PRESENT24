@@ -8,8 +8,8 @@
 
 
 
-void calcul_lm(int mot);
-void calcul_lc(int chiffre);
+void calcul_lm_lc(int mot, int chiffre);
+//void calcul_lc(int chiffre);
 
 
 int attaque_mid();

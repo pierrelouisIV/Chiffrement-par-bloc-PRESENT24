@@ -23,5 +23,5 @@ int calcul_binaire_en_hexa_2(int *tableau);
 int permutation_inv(int n);
 
 int dechiffrer(int mot, int cle_maitre); //Main
-
+int dechiffrer_sansecrire(int mot, int cle_maitre); //Main
 #endif
