@@ -133,16 +133,17 @@ int attaque_mid()
 	printf("Tri des tableaux fini en %f s \n",(double) (tempstri-tempscalc)/CLOCKS_PER_SEC);
 	
 	//Recherche element commun
+	int j = 0;
 	for(int i = 0; i < MAX; i++)
 	{
 		int res = binarySearch(LM,0,n-1,LC[i].mot);
 		if(res != -1)
-		{
-			printf("Element similaire : %X-%X(LM)  %X-%X(LC)\n",LM[res].mot,LM[res].cle,LC[i].mot,LC[i].cle);
+		{ j++;
+			//printf("Element similaire : %X-%X(LM)  %X-%X(LC)\n",LM[res].mot,LM[res].cle,LC[i].mot,LC[i].cle);
 			
 		}
 	}
-	
+	printf("%d\n",j);
 	
 	
 	return 0;
