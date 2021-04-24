@@ -85,22 +85,44 @@ void calcul_lm_lc(int mot, int chiffre)
 		
 		LM[i].cle = i;
 		LC[i].cle = i;
-		//printf("\nMessage chiffré (%d) : %X (16)\n\n", i,LM[i]);
-		//printf("%d\n",i);
 	}	
 }
 
-
-
+//Recherche dichotomique
+int binarySearch(couple arr[], int l, int r, int x)
+{
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+ 
+        // If the element is present at the middle
+        // itself
+        if (arr[mid].mot == x)
+            return mid;
+ 
+        // If element is smaller than mid, then
+        // it can only be present in left subarray
+        if (arr[mid].mot > x)
+            return binarySearch(arr, l, mid - 1, x);
+ 
+        // Else the element can only be present
+        // in right subarray
+        return binarySearch(arr, mid + 1, r, x);
+    }
+ 
+    // We reach here when element is not
+    // present in array
+    return -1;
+}
 
 
 int attaque_mid()
 {
 	//Creation des listes
-	clock_t tempscalc;
+	clock_t tempscalc, temps1;
+	temps1 = clock();
 	calcul_lm_lc(M1,C1);
 	tempscalc=clock();
-	printf("Calcul des tableaux fini en %f s \n",(double) tempscalc/CLOCKS_PER_SEC);
+	printf("Calcul des tableaux fini en %f s \n",(double) (tempscalc-temps1)/CLOCKS_PER_SEC);
 	
 	//Tri des listes (Quicksort)
 	clock_t tempstri;
@@ -111,7 +133,15 @@ int attaque_mid()
 	printf("Tri des tableaux fini en %f s \n",(double) (tempstri-tempscalc)/CLOCKS_PER_SEC);
 	
 	//Recherche element commun
-	
+	for(int i = 0; i < MAX; i++)
+	{
+		int res = binarySearch(LM,0,n-1,LC[i].mot);
+		if(res != -1)
+		{
+			printf("Element similaire : %X-%X(LM)  %X-%X(LC)\n",LM[res].mot,LM[res].cle,LC[i].mot,LC[i].cle);
+			
+		}
+	}
 	
 	
 	
