@@ -133,16 +133,33 @@ int attaque_mid()
 	printf("Tri des tableaux fini en %f s \n",(double) (tempstri-tempscalc)/CLOCKS_PER_SEC);
 	
 	//Recherche element commun
+	couple LMLC1[MAX];
 	int j = 0;
-	for(int i = 0; i < MAX; i++)
-	{
-		int res = binarySearch(LM,0,n-1,LC[i].mot);
-		if(res != -1)
-		{ j++;
-			//printf("Element similaire : %X-%X(LM)  %X-%X(LC)\n",LM[res].mot,LM[res].cle,LC[i].mot,LC[i].cle);
-			
-		}
-	}
+    for(int i = 0; i < MAX; i++)
+    {
+        int LMLC1 = binarySearch(LM,0,n-1,LC[i].mot);
+        if(LMLC1 != -1)
+        { 
+            LMLC1[i].mot = LM[i].cle; 
+            LMLC1[i].cle = LC[i].cle;
+            j++;
+        }
+    }
+    printf("Nombre de collision trouvé : %d\n",j);
+    
+    printf("Utilisation de M2 et C2 pour trouver K1 et K2\n");
+    
+    for(int i = 0; i < MAX; i++)
+    {
+        int t1 = chiffrer_sansecrire(M2,LMLC1[i].mot);
+        int t2 = dechiffrer_sansecrire(C2,LMLC1[i].cle);
+        
+        if(t1 == t2)
+        {
+            printf("K1 = %ld  -  K2 = %ld\n",LMLC1[i].mot,LMLC1[i].cle);
+        }
+        
+    }
 	printf("%d\n",j);
 	
 	
