@@ -10,8 +10,8 @@ typedef unsigned long uint32_t;
 
 struct couple
 {
-    uint32_t mot;
-    uint32_t cle;
+    int mot;
+    int cle;
 };
 typedef struct couple couple;
 
@@ -20,7 +20,7 @@ void calcul_lm_lc(int mot, int chiffre);
 int attaque_mid(); //Main
 
 // recherche dicho
-int binarySearch(couple arr[], int borne_inf, int borne_sup, uint32_t x);
+int binarySearch(couple arr[], int borne_inf, int borne_sup, int x);
 
 //Fonctions de tri
 void quickSort(couple array[], int low, int high);

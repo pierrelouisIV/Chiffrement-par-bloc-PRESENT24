@@ -15,6 +15,8 @@
 couple LM[MAX];			//couple chiffrement
 couple LC[MAX];			//couple dechiffrement
 
+couple LMChiffre1[MAX];
+
 // function to swap elements
 void swap(couple *a, couple *b) {
   couple t = *a;
@@ -71,7 +73,7 @@ void quickSort(couple array[], int low, int high) {
 // function to print couple elements
 void printArray(couple array[], int size) {
   for (int i = 0; i < size; ++i) {
-    printf("%ld-%ld  ", array[i].mot,array[i].cle);
+    printf("%d-%d  ", array[i].mot,array[i].cle);
   }
   printf("\n");
 }
@@ -89,7 +91,7 @@ void calcul_lm_lc(int mot, int chiffre)
 }
 
 //Recherche dichotomique
-int binarySearch(couple arr[], int l, int r, uint32_t x)
+int binarySearch(couple arr[], int l, int r, int x)
 {
     if (r >= l) {
         int mid = l + (r - l) / 2;
@@ -121,6 +123,7 @@ int attaque_mid()
 	clock_t tempscalc, temps1;
 	temps1 = clock();
 	calcul_lm_lc(M1,C1);
+	printf("liste done \n");
 	tempscalc=clock();
 	printf("Calcul des tableaux fini en %f s \n",(double) (tempscalc-temps1)/CLOCKS_PER_SEC);
 	
@@ -131,37 +134,37 @@ int attaque_mid()
 	quickSort(LC, 0, n - 1);
 	tempstri=clock();
 	printf("Tri des tableaux fini en %f s \n",(double) (tempstri-tempscalc)/CLOCKS_PER_SEC);
-	
+
 	//Recherche element commun
-	couple LMLC1[MAX];
 	int j = 0;
     for(int i = 0; i < MAX; i++)
     {
-        int LMLC1 = binarySearch(LM,0,n-1,LC[i].mot);
-        if(LMLC1 != -1)
+        int test = binarySearch(LM,0,n-1,LC[i].mot);
+        if(test != -1)
         { 
-            LMLC1[i].mot = LM[i].cle; 
-            LMLC1[i].cle = LC[i].cle;
+			
+            LMChiffre1[i].mot = LM[i].cle; 
+            LMChiffre1[i].cle = LC[i].cle;
+            
             j++;
         }
     }
-    printf("Nombre de collision trouvé : %d\n",j);
+    printf("Nombre de collisions trouvées : %d\n",j);
+ 
     
     printf("Utilisation de M2 et C2 pour trouver K1 et K2\n");
     
     for(int i = 0; i < MAX; i++)
     {
-        int t1 = chiffrer_sansecrire(M2,LMLC1[i].mot);
-        int t2 = dechiffrer_sansecrire(C2,LMLC1[i].cle);
+        int t1 = chiffrer_sansecrire(M2,LMChiffre1[i].mot);
+        int t2 = dechiffrer_sansecrire(C2,LMChiffre1[i].cle);
         
         if(t1 == t2)
         {
-            printf("K1 = %ld  -  K2 = %ld\n",LMLC1[i].mot,LMLC1[i].cle);
+            printf("K1 = %x  -  K2 = %x\n",LMChiffre1[i].mot,LMChiffre1[i].cle);
         }
         
     }
-	printf("%d\n",j);
-	
-	
+	//printf("%d\n",j);	
 	return 0;
 }

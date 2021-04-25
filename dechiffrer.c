@@ -128,18 +128,13 @@ int clef_plus_etat_2(int clef, int etat)
 //Etape 2 : la boîte-S 
 int substitution_inv(int m)
 {
-	int res1 = 0;
-	int res2 = 0;
-	int res3 = 0x0;
-	int masque = 0xffffff;
-	for (int i = 5; i >= 0; --i)
-	{
-		res1 = (m & masque) >> i*4;
-		masque >>= 4;
-		res2 = t2_dechiffrer[res1];
-		res3 = concat_2(res3, res2);
-	}
-	return res3;
+	m = t2_dechiffrer[m >> 20] << 20
+		| t2_dechiffrer[(m & 0x0f0000) >> 16] << 16
+		| t2_dechiffrer[(m & 0x00f000) >> 12] << 12
+		| t2_dechiffrer[(m & 0x000f00) >>  8] <<  8
+		| t2_dechiffrer[(m & 0x0000f0) >>  4] <<  4
+		| t2_dechiffrer[(m & 0x00000f)];
+	return m;
 }
 
 // Etape 1 : la permutation
