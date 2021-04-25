@@ -143,7 +143,7 @@ int attaque_mid()
         if(test != -1)
         { 
 			
-            LMChiffre1[i].mot = LM[i].cle; 
+            LMChiffre1[i].mot = LM[test].cle; 
             LMChiffre1[i].cle = LC[i].cle;
             
             j++;
