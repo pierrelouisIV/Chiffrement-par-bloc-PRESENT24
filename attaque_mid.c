@@ -71,7 +71,7 @@ void quickSort(couple array[], int low, int high) {
 // function to print couple elements
 void printArray(couple array[], int size) {
   for (int i = 0; i < size; ++i) {
-    printf("%d-%d  ", array[i].mot,array[i].cle);
+    printf("%ld-%ld  ", array[i].mot,array[i].cle);
   }
   printf("\n");
 }
@@ -89,7 +89,7 @@ void calcul_lm_lc(int mot, int chiffre)
 }
 
 //Recherche dichotomique
-int binarySearch(couple arr[], int l, int r, int x)
+int binarySearch(couple arr[], int l, int r, uint32_t x)
 {
     if (r >= l) {
         int mid = l + (r - l) / 2;

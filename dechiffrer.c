@@ -10,8 +10,6 @@
 // variables globales :	
 int t2_dechiffrer[] = {0x5, 0xe, 0xf, 0x8, 0xc, 0x1, 0x2, 0xd, 0xb, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xa};	// S(x) -> x
 
-int P_dechiffrer[] = {0, 6, 12, 18, 1, 7, 13, 19, 2, 8, 14, 20, 3, 9, 15, 21, 4,		// i -> P(i)
- 			 10, 16, 22, 5, 11, 17, 23};												// P_dechiffrer(i) -> i
 
 // pour stocker les sous clefs :
 int sous_clefs_dechiffre[11]; 

@@ -6,11 +6,12 @@
 #include "chiffrer.h"
 #include "dechiffrer.h"
 
+typedef unsigned long uint32_t;
 
 struct couple
 {
-    int mot;
-    int cle;
+    uint32_t mot;
+    uint32_t cle;
 };
 typedef struct couple couple;
 
@@ -18,7 +19,8 @@ void calcul_lm_lc(int mot, int chiffre);
 
 int attaque_mid(); //Main
 
-int recherche_dicho(int valeur, int borne_inf, int borne_sup);
+// recherche dicho
+int binarySearch(couple arr[], int borne_inf, int borne_sup, uint32_t x);
 
 //Fonctions de tri
 void quickSort(couple array[], int low, int high);

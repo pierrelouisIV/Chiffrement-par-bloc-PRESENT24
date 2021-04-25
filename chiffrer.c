@@ -11,9 +11,6 @@
 // variables globales de la boîte-S
  int t2[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};  //  S(x)
 
-// variable globale permutation :
- int P[] = {0, 6, 12, 18, 1, 7, 13, 19, 2, 8, 14, 20, 3, 9, 15, 21, 4,		// i -> P(i)
- 			 10, 16, 22, 5, 11, 17, 23};
 
 // pour stocker les sous_clefs
 int sous_clefs[11];
