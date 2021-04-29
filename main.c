@@ -58,7 +58,7 @@ int main()
 		if(choice == 3)
 		{
 			system("clear");
-			printf("ATTAQUE PAR LE MILIEU\n");
+			printf("ATTAQUE PAR LE MILIEU (sans threads) \n");
 			printf("Veuillez patienter\n");
 			attaque_mid();
 			printf("Voulez vous recommencer(1) ou quitter (0)\n");

@@ -7,7 +7,7 @@ debug:
 
 #edition de lien
 main:chiffrer.o dechiffrer.o attaque_mid.o main.o
-	gcc -Wall chiffrer.o dechiffrer.o attaque_mid.o main.o -o main -lm -lpthread
+	gcc -Wall chiffrer.o dechiffrer.o attaque_mid.o main.o -o main -lm
 
 #compilation de chiffrer.c
 chiffrer.o: chiffrer.c chiffrer.h

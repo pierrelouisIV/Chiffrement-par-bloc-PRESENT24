@@ -1,15 +1,14 @@
 #include "attaque_mid.h"
 #include <time.h>
-#include <pthread.h>
 
 // taille des listes Lm et LC
 #define MAX 16777216
 // premier couple clair-chiffré
-#define M1 0x06b2b2
-#define C1 0x58fa94
+#define M1 0x444b7a
+#define C1 0x114c98
 // deuxième couple clair-chiffré
-#define M2 0x69823e
-#define C2 0xf163ef
+#define M2 0xcf31f2
+#define C2 0x4ba36f
 
 // variables globales :
 
@@ -79,32 +78,6 @@ void printArray(couple array[], int size) {
   printf("\n");
 }
 
-//
-void *func1(void *arg)
-{
-	for(int i = 0; i < 8388608; i++)
-	{	
-		LM[i].mot = chiffrer_sansecrire(M1,i);
-		LC[i].mot = dechiffrer_sansecrire(C1,i);
-		
-		LM[i].cle = i;
-		LC[i].cle = i;
-	}
-	pthread_exit(NULL);
-}
-void *func2(void *arg)
-{
-	for(int i = 8388608; i < MAX; i++)
-	{	
-		LM[i].mot = chiffrer_sansecrire(M1,i);
-		LC[i].mot = dechiffrer_sansecrire(C1,i);
-		
-		LM[i].cle = i;
-		LC[i].cle = i;
-	}
-	pthread_exit(NULL);	
-}
-//
 
 void calcul_lm_lc(int mot, int chiffre)
 {
@@ -147,14 +120,11 @@ int binarySearch(couple arr[], int l, int r, int x)
 
 int attaque_mid()
 {
-	// threads :
-	//pthread_t threads1, threads2;
 
 	//Creation des listes
 	clock_t tempscalc, temps1;
 	temps1 = clock();
 	calcul_lm_lc(M1,C1);
-	printf("liste done \n");
 	tempscalc=clock();
 	printf("Calcul des tableaux fini en %f s \n",(double) (tempscalc-temps1)/CLOCKS_PER_SEC);
 	
