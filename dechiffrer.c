@@ -3,16 +3,13 @@
 #include <math.h>
 #include "dechiffrer.h"
 
-#define D 0
-#define l_boite 16
-#define l_permute 24
 
 // variables globales :	
 int t2_dechiffrer[] = {0x5, 0xe, 0xf, 0x8, 0xc, 0x1, 0x2, 0xd, 0xb, 0x4, 0x6, 0x3, 0x0, 0x7, 0x9, 0xa};	// S(x) -> x
 
-
 // pour stocker les sous clefs :
 int sous_clefs_dechiffre[11]; 
+
 
 // pour générer les sous clefs (boiteS non inversée):
 int t2_2[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};
@@ -110,6 +107,7 @@ void algo_cadencement_2(int K)
 //Etape 2 : la boîte-S 
 int substitution_inv(int m)
 {
+	// On utilise t2 pour avoir la nouvelle valeur de 4 bits
 	m = t2_dechiffrer[m >> 20] << 20
 		| t2_dechiffrer[(m & 0x0f0000) >> 16] << 16
 		| t2_dechiffrer[(m & 0x00f000) >> 12] << 12
@@ -175,9 +173,9 @@ int dechiffrer_sansecrire(int mot_chiffre, int clef_maitre)
 	etat ^= sous_clefs_dechiffre[0];
 	for (int i = 1; i < 11; ++i)
 	{		
-		etat = permutation_inv(etat);
-		etat = substitution_inv(etat);
-		etat ^= sous_clefs_dechiffre[i];	
+		etat = permutation_inv(etat);		// Permutation inverse
+		etat = substitution_inv(etat);		// Boite S inverse
+		etat ^= sous_clefs_dechiffre[i];	// XOR clef et etat
 	}
 	return etat;
 }

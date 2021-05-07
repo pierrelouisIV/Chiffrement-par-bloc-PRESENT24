@@ -1,6 +1,7 @@
 #ifndef H_CHIFFRER
 #define H_CHIFFRER
 
+// structure pour la clef maitre
 typedef unsigned char uint8_t;
 
 

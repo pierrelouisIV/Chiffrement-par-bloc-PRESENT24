@@ -3,16 +3,11 @@
 #include <math.h>
 #include "chiffrer.h"
 
-#define D 0
-#define l_boite 16
-#define l_permute 24
-
 
 // variables globales de la boîte-S
  int t2[] = {0xc, 0x5, 0x6, 0xb, 0x9, 0x0, 0xa, 0xd, 0x3, 0xe, 0xf, 0x8, 0x4, 0x7, 0x1, 0x2};  //  S(x)
 
-
-// pour stocker les sous_clefs
+// pour stocker les sous_clefs Ki
 int sous_clefs[11];
 
 
@@ -103,31 +98,27 @@ void algo_cadencement(int K)
 }
 
 
-// Etape 1 : le Xor clef + etat
-int clef_plus_etat(int clef, int etat)
-{
-	return clef ^ etat;
-}
-
 
 // Etape 2 : la boîte-S 
 int substitution(int m)
 {
+	// On utilise t2 pour avoir la nouvelle valeur de 4 bits
 	m = t2[(m >> 20)] << 20
 		| t2[(m & 0x0f0000) >> 16] << 16
 		| t2[(m & 0x00f000) >> 12] << 12
 		| t2[(m & 0x000f00) >>  8] <<  8
 		| t2[(m & 0x0000f0) >>  4] <<  4
 		| t2[(m & 0x00000f)];
+		
 	return m;
 }
 
 // Etape 3 : la permutation
 int permutation(int x)
 {
-	x = (x & 0x00800001)
-  | ((x & 0x00004000) << 1)
-  | ((x & 0x00000020) << 2)
+	x = (x & 0x00800001)		//k0 et k23 conservés
+  | ((x & 0x00004000) << 1)		//k14 déplacé vers k15
+  | ((x & 0x00000020) << 2)		// ...
   | ((x & 0x00080000) << 3)
   | ((x & 0x00000400) << 4)
   | ((x & 0x00000002) << 5)
@@ -182,9 +173,9 @@ int chiffrer_sansecrire(int mot, int cle_maitre)
 
 	for (int i = 0; i < 10; ++i)
 	{
-		etat ^= sous_clefs[i];
-		etat = substitution(etat);
-		etat = permutation(etat);
+		etat ^= sous_clefs[i];			// XOR
+		etat = substitution(etat);		// Boite S
+		etat = permutation(etat);		// Permutation
 	}
 	etat ^= sous_clefs[10];
 
