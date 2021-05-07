@@ -11,4 +11,4 @@ Commande (sur un terminal a la racine du projet) : - make pour compiler et execu
  (2) Dechiffrement : Rentré votre mot chiffré et la clé maitre associée.
                      Recupérer votre mot clair.
                      
- (3) Attaque par le milieu :
+ (3) Attaque par le milieu : Modifier les variables globales pour modifier l'attaque du milieu
