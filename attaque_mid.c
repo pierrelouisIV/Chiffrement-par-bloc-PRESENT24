@@ -140,10 +140,10 @@ int attaque_mid()
 	int j = 0;
     for(int i = 0; i < MAX; i++)
     {
-        int test = binarySearch(LM,0,n-1,LC[i].mot);
+        int test = binarySearch(LM,0,n-1,LC[i].mot); // On cherche si dans LM on trouve LC[i].mot
         if(test != -1)
         { 
-			
+			// On a une collision on sauvegarde donc les 2 clés de chaque tableau
             LMChiffre1[i].mot = LM[test].cle; 
             LMChiffre1[i].cle = LC[i].cle;
             
@@ -163,9 +163,7 @@ int attaque_mid()
         if(t1 == t2)
         {
             printf("K1 = %x  -  K2 = %x\n",LMChiffre1[i].mot,LMChiffre1[i].cle);
-        }
-        
+        }   
     }
-	//printf("%d\n",j);	
 	return 0;
 }
