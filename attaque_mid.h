@@ -1,12 +1,7 @@
 #ifndef H_ATTAQUE_MID
 #define H_ATTAQUE_MID
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include "chiffrer.h"
-#include "dechiffrer.h"
 
-typedef unsigned long uint32_t;
+#include "present24.h"
 
 struct couple
 {
@@ -14,6 +9,9 @@ struct couple
     int cle;
 };
 typedef struct couple couple;
+
+// qsort function pointer
+int compare_couple(const void* a, const void* b);
 
 void calcul_lm_lc(int mot, int chiffre);
 

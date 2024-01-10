@@ -1,5 +1,7 @@
-#include "attaque_mid.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
+#include "attaque_mid.h"
 
 // taille des listes Lm et LC
 #define MAX 16777216
@@ -17,57 +19,12 @@ couple LC[MAX];			//couple dechiffrement
 
 couple LMChiffre1[MAX];
 
-// function to swap elements
-void swap(couple *a, couple *b) {
-  couple t = *a;
-  *a = *b;
-  *b = t;
-}
-
-// function to find the partition position
-int partition(couple array[], int low, int high) {
-  
-  // select the rightmost element as pivot
-  int pivot = array[high].mot;
-  
-  // pointer for greater element
-  int i = (low - 1);
-
-  // traverse each element of the array
-  // compare them with the pivot
-  for (int j = low; j < high; j++) {
-    if (array[j].mot <= pivot) {
-        
-      // if element smaller than pivot is found
-      // swap it with the greater element pointed by i
-      i++;
-      
-      // swap element at i with element at j
-      swap(&array[i], &array[j]);
-    }
-  }
-
-  // swap the pivot element with the greater element at i
-  swap(&array[i + 1], &array[high]);
-  
-  // return the partition point
-  return (i + 1);
-}
-
-void quickSort(couple array[], int low, int high) {
-  if (low < high) {
-    
-    // find the pivot element such that
-    // elements smaller than pivot are on left of pivot
-    // elements greater than pivot are on right of pivot
-    int pi = partition(array, low, high);
-    
-    // recursive call on the left of pivot
-    quickSort(array, low, pi - 1);
-    
-    // recursive call on the right of pivot
-    quickSort(array, pi + 1, high);
-  }
+// Pointer function for qsort:
+int compare_couple(const void* a, const void* b)
+{
+  couple *ca = (couple*) a;
+  couple *cb = (couple*) b;
+  return (ca->mot - cb->mot);
 }
 
 // function to print couple elements
@@ -83,8 +40,8 @@ void calcul_lm_lc(int mot, int chiffre)
 {
 	for(int i = 0; i < MAX; i++)
 	{	
-		LM[i].mot = chiffrer_sansecrire(mot,i);
-		LC[i].mot = dechiffrer_sansecrire(chiffre,i);
+		LM[i].mot = encrypt(mot,i);
+		LC[i].mot = decrypt(chiffre,i);
 		
 		LM[i].cle = i;
 		LC[i].cle = i;
@@ -131,8 +88,9 @@ int attaque_mid()
 	//Tri des listes (Quicksort)
 	clock_t tempstri;
 	int n = sizeof(LM) / sizeof(LM[0]);
-	quickSort(LM, 0, n - 1);
-	quickSort(LC, 0, n - 1);
+  // use qsort:
+  qsort(LM, MAX, sizeof(couple), compare_couple);
+  qsort(LC, MAX, sizeof(couple), compare_couple);
 	tempstri=clock();
 	printf("Tri des tableaux fini en %f s \n",(double) (tempstri-tempscalc)/CLOCKS_PER_SEC);
 
@@ -157,8 +115,8 @@ int attaque_mid()
     
     for(int i = 0; i < MAX; i++)
     {
-        int t1 = chiffrer_sansecrire(M2,LMChiffre1[i].mot);
-        int t2 = dechiffrer_sansecrire(C2,LMChiffre1[i].cle);
+        int t1 = encrypt(M2,LMChiffre1[i].mot);
+        int t2 = decrypt(C2,LMChiffre1[i].cle);
         
         if(t1 == t2)
         {
