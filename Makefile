@@ -1,5 +1,4 @@
 run: main
-	./main
 
 debug:
 	valgrind ./main
